@@ -10,6 +10,7 @@ import java.util.List;
 
 import it.polito.tdp.extflightdelays.model.Airline;
 import it.polito.tdp.extflightdelays.model.Airport;
+import it.polito.tdp.extflightdelays.model.Distance;
 import it.polito.tdp.extflightdelays.model.Flight;
 
 public class ExtFlightDelaysDAO {
@@ -90,5 +91,35 @@ public class ExtFlightDelaysDAO {
 			System.out.println("Errore connessione al database");
 			throw new RuntimeException("Error Connection Database");
 		}
+	}
+	
+	public List<Distance> getAvgDistances(int x) {
+		String sql = "SELECT ORIGIN_AIRPORT_ID idA1, DESTINATION_AIRPORT_ID idA2, AVG(distance) AS avgDistanza "
+				+ "FROM flights "
+				+ "GROUP BY ORIGIN_AIRPORT_ID, DESTINATION_AIRPORT_ID "
+				+ "HAVING AVG(distance)>=?";
+		
+		
+		List<Distance> result = new ArrayList<>();
+		
+		
+		try {
+			Connection conn = ConnectDB.getConnection();
+			
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setInt(1, x);
+			ResultSet rs = st.executeQuery();
+			
+			while(rs.next()) {
+				result.add(new Distance(rs.getInt("idA1"), rs.getInt("idA2"), rs.getDouble("avgDistanza")));
+			}
+			
+			conn.close();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+		
 	}
 }
