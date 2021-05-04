@@ -49,7 +49,7 @@ public class FXMLController {
 		this.txtResult.appendText("Grafo creato con "+model.getGrafo().vertexSet().size()+" vertici e "+model.getGrafo().edgeSet().size()+" archi");
 		txtResult.appendText("\n\nELENCO ROTTE:\n");
 		for(DefaultWeightedEdge e: model.getGrafo().edgeSet()) {
-			txtResult.appendText(e.toString()+" "+this.model.getGrafo().getEdgeWeight(e)+"\n");
+			txtResult.appendText(e.toString().replaceAll("[()]", "").replaceAll("[:]", "-")+" : "+this.model.getGrafo().getEdgeWeight(e)+"\n");
 		}
 			
     }
