@@ -46,13 +46,17 @@ public class Model {
 		return grafo;
 	}
 
-	/*public String stampaGrafo(int x) {
+	public String stampaGrafo() {
 		
-		creaGrafo(x);
+		String result="";
 		
-		return "numero vertici: "+grafo.vertexSet().size()+"\n"
-				+ "numero archi: "+grafo.edgeSet().size()+"\n"
-						+ "elenco archi: "+grafo.edgeSet();
+		result+="Grafo creato con "+grafo.vertexSet().size()+" vertici e "+grafo.edgeSet().size()+" archi";
+		result+="\n\nELENCO ROTTE:\n";
+		for(DefaultWeightedEdge e: grafo.edgeSet()) {
+			result+=e.toString().replaceAll("[()]", "").replaceAll("[:]", "-")+" : "+grafo.getEdgeWeight(e)+"\n";
+		}
 		
-	}*/
+		return result;
+		
+	}
 }
